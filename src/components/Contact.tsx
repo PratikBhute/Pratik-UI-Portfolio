@@ -2,33 +2,97 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Linkedin, Github, Send } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Linkedin,
+  Github,
+  Send,
+  Download,
+} from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from "@emailjs/browser";
+
+// This initialization is correct if you are using Vite.
+// If using Next.js, it should be process.env.NEXT_PUBLIC_...
+emailjs.init({
+  publicKey: import.meta.env.VITE_PUBLIC_KEY,
+});
 
 const Contact = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [downloadCount, setDownloadCount] = useState(14);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon!",
-    });
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsLoading(true);
+
+    try {
+      // CORRECTED: The `to_email` is no longer needed here because
+      // it's now set in the EmailJS template settings.
+      const templateParams = {
+        to_name: "Pratik Bhute", // This is for personalizing the email content, e.g., "Hi Pratik,"
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        reply_to: formData.email, // Good practice for the "Reply-To" header
+      };
+
+      await emailjs.send(
+        import.meta.env.VITE_SERVICE_ID,
+        import.meta.env.VITE_TEMPLATE_ID,
+        templateParams
+      );
+
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for reaching out. I'll get back to you soon!",
+      });
+
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Error Sending Message",
+        description: "Please try again later or contact me directly via email.",
+        variant: "destructive",
+      });
+      // It's helpful to log the specific error object
+      console.error("Error sending email:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/PratikBhute_Frontend_Developer.pdf";
+    link.download = "PratikBhute_CV_UI_Developer.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setDownloadCount((prev) => prev + 1);
+    toast({
+      title: "Success!",
+      description: "Resume download started.",
     });
   };
 
@@ -38,114 +102,96 @@ const Contact = () => {
       title: "Email",
       value: "pratik.bhute07@gmail.com",
       link: "mailto:pratik.bhute07@gmail.com",
-      color: "from-primary to-accent"
+      color: "from-primary to-accent",
     },
     {
       icon: <Phone className="w-6 h-6" />,
       title: "Phone",
       value: "+91 8623029271",
       link: "tel:+918623029271",
-      color: "from-accent to-secondary"
+      color: "from-accent to-secondary",
     },
     {
       icon: <MapPin className="w-6 h-6" />,
       title: "Location",
       value: "Wardha, Maharashtra",
-      link: "#",
-      color: "from-secondary to-primary"
+      link: "https://www.google.com/maps/place/Bhute+House/@20.7516575,78.6245111,142m",
+      color: "from-secondary to-primary",
     },
     {
       icon: <Linkedin className="w-6 h-6" />,
       title: "LinkedIn",
       value: "pratikbhute",
       link: "https://linkedin.com/in/pratikbhute",
-      color: "from-primary to-secondary"
-    }
+      color: "from-primary to-secondary",
+    },
   ];
 
   return (
-    <section id="contact" className="py-20 relative">
-      <div className="container mx-auto px-6">
+    <section id="contact" className="py-20 relative overflow-hidden">
+      <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
-          {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               <span className="gradient-text">Let's Work Together</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Ready to bring your ideas to life? Let's discuss your next project and create something amazing together.
+              Ready to bring your ideas to life? Let's discuss your next project
+              and create something amazing together.
             </p>
           </div>
-
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Information */}
-            <div className="slide-up" style={{ animationDelay: '0.2s' }}>
+            <div className="slide-up" style={{ animationDelay: "0.2s" }}>
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-2xl font-bold mb-6 text-foreground">Get In Touch</h3>
+                  <h3 className="text-2xl font-bold mb-6 text-foreground">
+                    Get In Touch
+                  </h3>
                   <p className="text-muted-foreground mb-8 leading-relaxed">
-                    I'm always open to discussing new opportunities, interesting projects, 
-                    or potential collaborations. Whether you have a question or just want to say hi, 
-                    I'll do my best to get back to you!
+                    I'm always open to discussing new opportunities, interesting
+                    projects, or potential collaborations. Whether you have a
+                    question or just want to say hi, I'll do my best to get back
+                    to you!
                   </p>
                 </div>
-
                 <div className="grid sm:grid-cols-2 gap-4">
-                  {contactInfo.map((info, index) => (
+                  {contactInfo.map((info) => (
                     <a
                       key={info.title}
                       href={info.link}
-                      target={info.link.startsWith('http') ? '_blank' : '_self'}
-                      rel={info.link.startsWith('http') ? 'noopener noreferrer' : ''}
+                      target={info.link.startsWith("http") ? "_blank" : "_self"}
+                      rel={
+                        info.link.startsWith("http")
+                          ? "noopener noreferrer"
+                          : ""
+                      }
                       className="gradient-border hover-lift p-4 rounded-xl group transition-all duration-300"
                     >
-                      <div className={`inline-flex p-3 rounded-lg bg-gradient-to-r ${info.color} text-white mb-3 group-hover:scale-110 transition-transform`}>
+                      <div
+                        className={`inline-flex p-3 rounded-lg bg-gradient-to-r ${info.color} text-white mb-3 group-hover:scale-110 transition-transform`}
+                      >
                         {info.icon}
                       </div>
-                      <h4 className="font-semibold text-foreground mb-1">{info.title}</h4>
-                      <p className="text-sm text-muted-foreground">{info.value}</p>
+                      <h4 className="font-semibold text-foreground mb-1">
+                        {info.title}
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        {info.value}
+                      </p>
                     </a>
                   ))}
                 </div>
-
-                {/* Social Links */}
-                <div className="pt-8">
-                  <h4 className="text-lg font-semibold mb-4 text-foreground">Follow Me</h4>
-                  <div className="flex gap-4">
-                    <a 
-                      href="https://linkedin.com/in/pratikbhute" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform hover-lift"
-                    >
-                      <Linkedin size={20} />
-                    </a>
-                    <a 
-                      href="https://github.com/pratikbhute" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 bg-gradient-to-r from-accent to-secondary rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform hover-lift"
-                    >
-                      <Github size={20} />
-                    </a>
-                    <a 
-                      href="mailto:pratik.bhute07@gmail.com"
-                      className="w-12 h-12 bg-gradient-to-r from-secondary to-primary rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform hover-lift"
-                    >
-                      <Mail size={20} />
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
-
-            {/* Contact Form */}
-            <div className="slide-up" style={{ animationDelay: '0.4s' }}>
+            <div className="slide-up" style={{ animationDelay: "0.4s" }}>
               <Card className="gradient-border p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-foreground mb-2"
+                      >
                         Full Name
                       </label>
                       <Input
@@ -155,11 +201,15 @@ const Contact = () => {
                         onChange={handleInputChange}
                         placeholder="Your full name"
                         required
-                        className="bg-muted/50 border-border focus:border-primary transition-colors"
+                        autoComplete="name"
+                        className="bg-muted/50 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-foreground mb-2"
+                      >
                         Email Address
                       </label>
                       <Input
@@ -170,13 +220,16 @@ const Contact = () => {
                         onChange={handleInputChange}
                         placeholder="your.email@example.com"
                         required
-                        className="bg-muted/50 border-border focus:border-primary transition-colors"
+                        autoComplete="email"
+                        className="bg-muted/50 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                       />
                     </div>
                   </div>
-                  
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-medium text-foreground mb-2"
+                    >
                       Subject
                     </label>
                     <Input
@@ -186,12 +239,14 @@ const Contact = () => {
                       onChange={handleInputChange}
                       placeholder="What's this about?"
                       required
-                      className="bg-muted/50 border-border focus:border-primary transition-colors"
+                      className="bg-muted/50 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                     />
                   </div>
-                  
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-foreground mb-2"
+                    >
                       Message
                     </label>
                     <Textarea
@@ -202,28 +257,59 @@ const Contact = () => {
                       placeholder="Tell me about your project or just say hello!"
                       rows={5}
                       required
-                      className="bg-muted/50 border-border focus:border-primary transition-colors resize-none"
+                      className="bg-muted/50 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary resize-none"
                     />
                   </div>
-                  
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 text-primary-foreground hover-lift"
                     size="lg"
+                    disabled={isLoading}
                   >
-                    <Send className="w-4 h-4 mr-2" />
-                    Send Message
+                    {isLoading ? (
+                      <div className="flex items-center justify-center">
+                        <div className="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        Sending...
+                      </div>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4 mr-2" />
+                        Send Message
+                      </>
+                    )}
                   </Button>
                 </form>
               </Card>
             </div>
           </div>
+          <div
+            className="slide-up mt-12 text-center"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <div className="inline-flex items-center gap-4 bg-gradient-to-r from-muted/50 to-muted/30 rounded-full px-8 py-4 border border-border">
+              <div className="text-center">
+                <div className="text-2xl font-bold gradient-text">
+                  <button
+                    onClick={handleDownload}
+                    className="rounded-full text-white hover:scale-1100 transition-transform hover-lift"
+                    aria-label="Download Resume"
+                  >
+                    <Download size={20} />
+                  </button>
+                </div>
+                <div className="text-sm text-muted-foreground">Download CV</div>
+              </div>
+              <div className="w-px h-8 bg-border"></div>
+              <div className="text-center">
+                <div className="text-2xl font-bold gradient-text">{downloadCount}+</div>
+                <div className="text-sm text-muted-foreground">Downloads</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      
-      {/* Background decoration */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-r from-accent/10 to-secondary/10 rounded-full blur-3xl"></div>
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-gradient-to-r from-primary/10 to-accent/10 rounded-full blur-3xl z-[-1]"></div>
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-r from-accent/10 to-secondary/10 rounded-full blur-3xl z-[-1]"></div>
     </section>
   );
 };

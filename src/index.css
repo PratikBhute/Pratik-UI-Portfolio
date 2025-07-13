@@ -138,15 +138,8 @@ All colors MUST be HSL.
     border-radius: var(--radius);
   }
 
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    background: var(--gradient-primary);
-    border-radius: inherit;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask-composite: xor;
+  .gradient-border {
+    border: 1.5px solid #3FBEF1;
   }
 
   .floating-animation {

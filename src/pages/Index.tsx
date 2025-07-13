@@ -5,20 +5,22 @@ import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   useEffect(() => {
     // Add smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-    
+    document.documentElement.style.scrollBehavior = "smooth";
+
     // Intersection Observer for slide-up animations
     const observeElements = () => {
-      const elements = document.querySelectorAll('.slide-up');
+      const elements = document.querySelectorAll(".slide-up");
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              (entry.target as HTMLElement).style.animationPlayState = 'running';
+              (entry.target as HTMLElement).style.animationPlayState =
+                "running";
             }
           });
         },
@@ -26,7 +28,7 @@ const Index = () => {
       );
 
       elements.forEach((el) => {
-        (el as HTMLElement).style.animationPlayState = 'paused';
+        (el as HTMLElement).style.animationPlayState = "paused";
         observer.observe(el);
       });
     };
@@ -47,9 +49,10 @@ const Index = () => {
         <Education />
         <Contact />
       </main>
-      
+      <Footer />
+
       {/* Footer */}
-      <footer className="py-8 border-t border-border">
+      {/* <footer className="py-8 border-t border-border">
         <div className="container mx-auto px-6">
           <div className="text-center">
             <p className="text-muted-foreground">
@@ -62,7 +65,7 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 };
