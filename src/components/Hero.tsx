@@ -17,8 +17,8 @@ const Hero = () => {
           {/* Profile Image */}
           <div className="relative mb-8 inline-block">
             <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-primary to-accent p-1 pulse-glow">
-              <div className="w-full h-full rounded-full bg-background flex items-center justify-center text-4xl font-bold gradient-text">
-                PB
+              <div className="w-full h-full text-white rounded-full bg-background flex items-center justify-center text-4xl font-bold gradient-text">
+                <img src="/public/profile-avatar.jpg" alt="Pratik Bhute" className="h-27 object-cover rounded-full" />
               </div>
             </div>
           </div>
@@ -32,7 +32,7 @@ const Hero = () => {
           
           <div className="slide-up" style={{ animationDelay: '0.4s' }}>
             <div className="text-xl md:text-2xl text-muted-foreground mb-6 overflow-hidden">
-              <span className="inline-block border-r-2 border-primary animate-typewriter">
+              <span className="inline-block border-r-2 border-primary animate-typewriter pr-2">
                 Frontend Developer | React | Angular | UI Developer
               </span>
             </div>
@@ -42,15 +42,15 @@ const Hero = () => {
           <div className="slide-up flex flex-wrap justify-center gap-6 mb-8 text-sm md:text-base" style={{ animationDelay: '0.6s' }}>
             <div className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
               <MapPin size={16} />
-              <span>Wardha, Maharashtra</span>
+              <a href="https://www.google.com/maps/place/Bhute+House/@20.7516575,78.6245111,142m" target="_blank" rel="noopener noreferrer">Wardha, Maharashtra</a>
             </div>
             <div className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
               <Phone size={16} />
-              <span>+91 8623029271</span>
+              <a href="tel:+918623029271">+91 8623029271</a>
             </div>
             <div className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
               <Mail size={16} />
-              <span>pratik.bhute07@gmail.com</span>
+              <a href="mailto:pratik.bhute07@gmail.com">pratik.bhute07@gmail.com</a>
             </div>
           </div>
           
@@ -68,7 +68,7 @@ const Hero = () => {
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 text-primary-foreground hover-lift"
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
             >
               View My Work
             </Button>
