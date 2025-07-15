@@ -1,54 +1,8 @@
 import { Briefcase, Calendar, MapPin, Building } from "lucide-react";
+import { useAppContext } from "@/contaxt/AppContext";
 
 const Experience = () => {
-  const experiences = [
-    {
-      title: "Frontend Engineer",
-      project: "AVA+ Michelangelo (AI Web Tool)",
-      company: "Ascendion Technologies Pvt Ltd",
-      location: "Hyderabad",
-      duration: "01/2024 - Present",
-      type: "Current Role",
-      achievements: [
-        "Designed and developed a responsive UI using React, focusing on user-friendliness and alignment with client specifications",
-        "Built reusable and modular UI components using libraries like React-Strap, enabling efficient routing and MSAL-based authentication",
-        "Integrated a real-time canvas editor, allowing users to create wireframes seamlessly converted to code by AI",
-        "Ensured robust API integration with back-end systems to enable real-time data generation from AI LLM modules"
-      ],
-      technologies: ["React", "React-Strap", "MSAL", "RESTful APIs", "AI Integration"]
-    },
-    {
-      title: "Frontend Engineer",
-      project: "Huron Research Suite (HRS V12)",
-      company: "HURON | Ascendion Technologies",
-      location: "Remote",
-      duration: "11/2022 - 01/2024",
-      type: "Previous Role",
-      achievements: [
-        "Developed features in the Conflict of Interest (COI) module to streamline compliance and user workflows",
-        "Enhanced dashboard usability with hyperlink IDs for seamless navigation to detailed information",
-        "Reduced critical bugs by 30% through timely debugging and collaboration with QA teams",
-        "Delivered agile solutions, adhering to sprint timelines and improving team velocity"
-      ],
-      technologies: ["React", "JavaScript", "Agile", "QA Collaboration"]
-    },
-    {
-      title: "Frontend Engineer",
-      project: "Integrated Banking Solution (IBS) Modernization",
-      company: "FIS Global | Ascendion Technologies",
-      location: "Remote",
-      duration: "02/2022 - 09/2022",
-      type: "Previous Role",
-      achievements: [
-        "Modernised the UI layer by transitioning from IE compatibility to support modern browsers using Angular 12",
-        "Enhanced user interactions with AJAX calls and callback functions, ensuring responsiveness",
-        "Constructed modular form components with Angular Formly that improved code maintainability",
-        "Transformed the user experience by minimising load times from 5 seconds down to under 2 seconds",
-        "Implemented data validation logic and custom mappings, ensuring a 95% reduction in manual intervention"
-      ],
-      technologies: ["Angular 12", "Angular Formly", "AJAX", "Performance Optimization"]
-    }
-  ];
+  const { experiences, achievements } = useAppContext();
 
   return (
     <section id="experience" className="py-20 relative">
@@ -157,27 +111,15 @@ const Experience = () => {
                 <span className="gradient-text">Key Achievements & Contributions</span>
               </h3>
               <div className="grid md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
-                    <span className="text-2xl font-bold text-primary-foreground">95%</span>
+                {achievements.map((achievement, index) => (
+                  <div key={index} className="text-center">
+                    <div className={`w-16 h-16 bg-gradient-to-r ${achievement.color} rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow`}>
+                      <span className="text-xl font-bold text-primary-foreground">{achievement.value}</span>
+                    </div>
+                    <h4 className="font-semibold text-foreground mb-2">{achievement.label}</h4>
+                    <p className="text-sm text-muted-foreground">{achievement.description}</p>
                   </div>
-                  <h4 className="font-semibold text-foreground mb-2">Manual Intervention Reduction</h4>
-                  <p className="text-sm text-muted-foreground">Implemented data validation logic reducing manual work</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-accent to-secondary rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
-                    <span className="text-2xl font-bold text-primary-foreground">30%</span>
-                  </div>
-                  <h4 className="font-semibold text-foreground mb-2">Bug Reduction</h4>
-                  <p className="text-sm text-muted-foreground">Reduced critical bugs through collaboration and debugging</p>
-                </div>
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-r from-secondary to-primary rounded-full flex items-center justify-center mx-auto mb-4 pulse-glow">
-                    <span className="text-xl font-bold text-primary-foreground">2s</span>
-                  </div>
-                  <h4 className="font-semibold text-foreground mb-2">Load Time Optimization</h4>
-                  <p className="text-sm text-muted-foreground">Improved load times from 5 seconds to under 2 seconds</p>
-                </div>
+                ))}
               </div>
             </div>
           </div>

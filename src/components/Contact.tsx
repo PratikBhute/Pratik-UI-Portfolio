@@ -14,9 +14,8 @@ import {
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
+import { useAppContext } from "@/contaxt/AppContext";
 
-// This initialization is correct if you are using Vite.
-// If using Next.js, it should be process.env.NEXT_PUBLIC_...
 emailjs.init({
   publicKey: import.meta.env.VITE_PUBLIC_KEY,
 });
@@ -31,21 +30,20 @@ const Contact = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [downloadCount, setDownloadCount] = useState(14);
+  const { contactInfo, handleDownload } = useAppContext();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // CORRECTED: The `to_email` is no longer needed here because
-      // it's now set in the EmailJS template settings.
       const templateParams = {
-        to_name: "Pratik Bhute", // This is for personalizing the email content, e.g., "Hi Pratik,"
+        to_name: "Pratik Bhute",
         from_name: formData.name,
         from_email: formData.email,
         subject: formData.subject,
         message: formData.message,
-        reply_to: formData.email, // Good practice for the "Reply-To" header
+        reply_to: formData.email,
       };
 
       await emailjs.send(
@@ -82,61 +80,16 @@ const Contact = () => {
     });
   };
 
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = "/PratikBhute_Frontend_Developer.pdf";
-    link.download = "PratikBhute_CV_UI_Developer.pdf";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setDownloadCount((prev) => prev + 1);
-    toast({
-      title: "Success!",
-      description: "Resume download started.",
-    });
-  };
-
-  const contactInfo = [
-    {
-      icon: <Mail className="w-6 h-6" />,
-      title: "Email",
-      value: "pratik.bhute07@gmail.com",
-      link: "mailto:pratik.bhute07@gmail.com",
-      color: "from-primary to-accent",
-    },
-    {
-      icon: <Phone className="w-6 h-6" />,
-      title: "Phone",
-      value: "+91 8623029271",
-      link: "tel:+918623029271",
-      color: "from-accent to-secondary",
-    },
-    {
-      icon: <MapPin className="w-6 h-6" />,
-      title: "Location",
-      value: "Wardha, Maharashtra",
-      link: "https://www.google.com/maps/place/Bhute+House/@20.7516575,78.6245111,142m",
-      color: "from-secondary to-primary",
-    },
-    {
-      icon: <Linkedin className="w-6 h-6" />,
-      title: "LinkedIn",
-      value: "pratikbhute",
-      link: "https://linkedin.com/in/pratikbhute",
-      color: "from-primary to-secondary",
-    },
-  ];
-
   return (
     <section id="contact" className="py-20 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="gradient-text">Let's Work Together</span>
+              <span className="gradient-text">Let&apos;s Work Together</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Ready to bring your ideas to life? Let's discuss your next project
+              Ready to bring your ideas to life? Let&apos;s discuss your next project
               and create something amazing together.
             </p>
           </div>
@@ -301,7 +254,9 @@ const Contact = () => {
               </div>
               <div className="w-px h-8 bg-border"></div>
               <div className="text-center">
-                <div className="text-2xl font-bold gradient-text">{downloadCount}+</div>
+                <div className="text-2xl font-bold gradient-text">
+                  {downloadCount}+
+                </div>
                 <div className="text-sm text-muted-foreground">Downloads</div>
               </div>
             </div>
