@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { useAppContext } from "@/contaxt/AppContext";
 
 const Navigation = () => {
+  const { navigationItems, personalInfo, scrollToSection } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -10,24 +12,13 @@ const Navigation = () => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Education', href: '#education' },
-    { name: 'Contact', href: '#contact' }
-  ];
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleScrollToSection = (href: string) => {
+    scrollToSection(href);
     setIsOpen(false);
   };
 
@@ -45,24 +36,24 @@ const Navigation = () => {
               href="#home" 
               onClick={(e) => {
                 e.preventDefault();
-                scrollToSection('#home');
+                handleScrollToSection('#home');
               }}
               className="text-2xl font-bold gradient-text hover:scale-105 transition-transform"
             >
-              PB
+              {personalInfo.logo}
             </a>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              {navItems.map((item) => (
+              {navigationItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollToSection(item.href);
+                    handleScrollToSection(item.href);
                   }}
                   className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-all duration-200 hover-lift"
                 >
@@ -74,8 +65,8 @@ const Navigation = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block">
-            <Button 
-              onClick={() => scrollToSection('#contact')}
+            <Button
+              onClick={() => handleScrollToSection('#contact')}
               className="bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 text-primary-foreground hover-lift"
             >
               Let's Talk
@@ -97,13 +88,13 @@ const Navigation = () => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-card/95 backdrop-blur-lg rounded-lg mt-2 border border-border">
-              {navItems.map((item) => (
+              {navigationItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    scrollToSection(item.href);
+                    handleScrollToSection(item.href);
                   }}
                   className="block px-3 py-2 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
                 >
@@ -111,8 +102,8 @@ const Navigation = () => {
                 </a>
               ))}
               <div className="pt-2">
-                <Button 
-                  onClick={() => scrollToSection('#contact')}
+                <Button
+                  onClick={() => handleScrollToSection('#contact')}
                   className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/80 hover:to-accent/80 text-primary-foreground"
                 >
                   Let's Talk

@@ -1,6 +1,8 @@
 import { GraduationCap, Calendar, MapPin, Award } from "lucide-react";
+import { useAppContext } from "@/contaxt/AppContext";
 
 const Education = () => {
+  const { education } = useAppContext();
   return (
     <section id="education" className="py-20 relative">
       <div className="container mx-auto px-6">
@@ -30,18 +32,21 @@ const Education = () => {
                 <div className="flex-1">
                   <div className="flex flex-wrap items-center gap-3 mb-4">
                     <span className="px-3 py-1 bg-gradient-to-r from-primary to-accent text-primary-foreground text-sm font-medium rounded-full">
-                      Bachelor's Degree
+                      {education.type}
                     </span>
                   </div>
 
                   <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                    Bachelor of Engineering
+                    {education.degree}
                   </h3>
 
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <Award size={16} className="text-accent" />
-                      <span className="font-medium">Datta Meghe Institute of Engineering Technology and Research</span>
+                      <span className="font-medium">
+                        Datta Meghe Institute of Engineering Technology and
+                        Research
+                      </span>
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <MapPin size={16} className="text-accent" />
@@ -55,10 +60,13 @@ const Education = () => {
 
                   <div className="border-l-4 border-gradient-to-b from-primary to-accent pl-6">
                     <p className="text-muted-foreground leading-relaxed">
-                      Completed my Bachelor's degree in Engineering, laying a strong foundation in 
-                      technical concepts, problem-solving methodologies, and analytical thinking. 
-                      This educational background has been instrumental in my journey as a frontend developer, 
-                      providing me with the systematic approach to software development and engineering principles.
+                      Completed my Bachelor's degree in Engineering, laying a
+                      strong foundation in technical concepts, problem-solving
+                      methodologies, and analytical thinking. This educational
+                      background has been instrumental in my journey as a
+                      frontend developer, providing me with the systematic
+                      approach to software development and engineering
+                      principles.
                     </p>
                   </div>
                 </div>
@@ -67,7 +75,10 @@ const Education = () => {
           </div>
 
           {/* Additional Info */}
-          <div className="slide-up mt-12 text-center" style={{ animationDelay: '0.3s' }}>
+          <div
+            className="slide-up mt-12 text-center"
+            style={{ animationDelay: "0.3s" }}
+          >
             <div className="inline-flex items-center gap-4 bg-gradient-to-r from-muted/50 to-muted/30 rounded-full px-8 py-4 border border-border">
               <div className="text-center">
                 <div className="text-2xl font-bold gradient-text">2020</div>
@@ -82,7 +93,7 @@ const Education = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Background decoration */}
       <div className="absolute top-1/4 left-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-1/4 right-0 w-48 h-48 bg-accent/5 rounded-full blur-3xl"></div>
