@@ -112,7 +112,7 @@ const Hero = () => {
             <Button
               size="lg"
               variant="outline"
-              className="border-border hover:bg-muted hover-lift"
+              className="border-border hover:bg-muted hover:text-white hover-lift"
               onClick={() =>
                 document
                   .getElementById("contact")
