@@ -127,7 +127,7 @@ const PERSONAL_INFO: PersonalInfo = {
     "https://www.google.com/maps/place/Bhute+House/@20.7516575,78.6245111,142m/data=!3m1!1e3!4m6!3m5!1s0x3bd47f0072436ba7:0xee0503c93a58eb57!8m2!3d20.7515208!4d78.624825!16s%2Fg%2F11whhff1nz?authuser=0&entry=ttu&g_ep=EgoyMDI1MDcwOS4wIKXMDSoASAFQAw%3D%3D",
   summary:
     "Passionate about creating seamless user experiences and delivering innovative solutions aligned with business goals.",
-  profileImage: "https://github.com/PratikBhute/Pratik-UI-Portfolio/blob/main/public/profile-avatar.jpg",
+  profileImage: "https://raw.githubusercontent.com/PratikBhute/Pratik-UI-Portfolio/refs/heads/main/public/profile-avatar.jpg",
   logo: "PB",
 };
 

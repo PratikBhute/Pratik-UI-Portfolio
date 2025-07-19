@@ -26,13 +26,13 @@ const Hero = () => {
           {/* Profile Image */}
           <div className="relative mb-8 inline-block">
             <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-r from-primary to-accent p-1 pulse-glow">
-              <div className="w-full h-full text-white rounded-full bg-background flex items-center justify-center text-4xl font-bold gradient-text">
+                <div className="w-full h-full text-white rounded-full bg-background flex items-center justify-center text-4xl font-bold gradient-text overflow-hidden">
                 <img
                   src={personalInfo.profileImage}
                   alt={personalInfo.name}
-                  className="h-27 object-cover rounded-full"
+                  className="w-full h-full object-cover rounded-full"
                 />
-              </div>
+                </div>
             </div>
           </div>
 
