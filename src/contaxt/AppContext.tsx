@@ -213,13 +213,16 @@ const EXPERIENCES: Experience[] = [
     duration: "01/2024 - Present",
     type: "Current Role",
     achievements: [
-      "Designed and developed a responsive UI using React, focusing on user-friendliness and alignment with client specifications",
-      "Built reusable and modular UI components using libraries like React-Strap, enabling efficient routing and MSAL-based authentication",
+      "Designed and developed a responsive UI using React as well as Angular, focusing on user-friendliness and alignment with client specifications",
+      "Built reusable and modular UI components using libraries like React-Strap and AVA-Play, enabling efficient routing and ADO based authentication",
       "Integrated a real-time canvas editor, allowing users to create wireframes seamlessly converted to code by AI",
       "Ensured robust API integration with back-end systems to enable real-time data generation from AI LLM modules",
     ],
     technologies: [
       "React",
+      "Angular 19",
+      "JavaScript",
+      "TypeScript",
       "React-Strap",
       "MSAL",
       "RESTful APIs",
