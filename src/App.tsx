@@ -14,7 +14,7 @@ const App = () => (
       {/* <AppProvider> */}
         <BrowserRouter>
           <Routes>
-            <Route path="/pratikbhute-official-portfolio" element={<Index />} />
+            <Route path="official-portfolio" element={<Index />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

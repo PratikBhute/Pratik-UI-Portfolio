@@ -59,7 +59,7 @@ const Hero = () => {
             <div className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
               <MapPin size={16} />
               <a
-                href={personalInfo.locationLink}
+                href='#'
                 target="_blank"
                 rel="noopener noreferrer"
               >
