@@ -160,7 +160,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     icon: <Globe className="w-6 h-6" />,
     skills: [
       "React JS",
-      "Angular",
+      "Angular 19",
       "JavaScript",
       "TypeScript",
       "HTML5",
